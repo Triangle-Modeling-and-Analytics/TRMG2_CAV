@@ -16,8 +16,10 @@ endmacro
 Macro "Auto Ownership" (Args)
     RunMacro("Create AO Features", Args)
     RunMacro("Calculate Auto Ownership", Args)
+    RunMacro("Determine CAV Households", Args)
     return(1)
 endmacro
+
 
 /*
 Macro that creates one dimensional marginls for HH by Size, HH by income and HH by workers
@@ -309,6 +311,7 @@ Macro "Generate Tabulations"(Args)
     modify.FindOrAddField("HHSeniors", "Long", 12,,)
     modify.FindOrAddField("HHWorkers", "Long", 12,,)
     modify.FindOrAddField("HHNWAdults", "Long", 12,,)
+    modify.FindOrAddField("MaxAdultAgeCat", "Long", 12,,)
     modify.Apply()
     {hhFlds, hhSpecs} = GetFields(vw_hh,)
 
@@ -327,20 +330,23 @@ Macro "Generate Tabulations"(Args)
     expr3 = CreateExpression(vw_perM, "Senior", "if Age >= 65 then 1 else 0",)
     expr4 = CreateExpression(vw_perM, "Worker", "if EmploymentStatus = 1 or EmploymentStatus = 2 or EmploymentStatus = 4 or EmploymentStatus = 5 then 1 else 0",)
     expr5 = CreateExpression(vw_perM, "NWAdults", "if Age >= 18 and Worker = 0 then 1 else 0",)
+    expr5 = CreateExpression(vw_perM, "AdultAgeCat", "if Age < 18 then 0 elseif Age >= 18 and Age <=44 then 2 else 1",)
+
 
     // Aggregate person table by 'HouseholdID' and sum the above expression fields
-    aggrSpec = {{"Kid", "sum",}, {"AdultUnder65", "sum",}, {"Senior", "sum",}, {"Worker", "sum",}, {"NWAdults", "sum",}}
+    aggrSpec = {{"Kid", "sum",}, {"AdultUnder65", "sum",}, {"Senior", "sum",}, {"Worker", "sum",}, {"NWAdults", "sum",}, {"AdultAgeCat", "max",}}
     vwA =  AggregateTable("MemAggr", vw_perM + "|", "MEM",, "HouseholdID", aggrSpec,)
     {flds, specs} = GetFields(vwA,)
     
     // Join aggregation file to HH table and copy over values
     vwJ = JoinViews("Aggr_HH", specs[1], GetFieldFullSpec(vw_hhM, "HouseholdID"),)
-    vecs = GetDataVectors(vwJ + "|", {"Kid", "AdultUnder65", "Senior", "Worker", "NWAdults"}, {OptArray: 1})
+    vecs = GetDataVectors(vwJ + "|", {"Kid", "AdultUnder65", "Senior", "Worker", "NWAdults", "AdultAgeCat"}, {OptArray: 1})
     vecsSet.HHKids = vecs.Kid
     vecsSet.HHAdultsUnder65 = vecs.AdultUnder65
     vecsSet.HHSeniors = vecs.Senior
     vecsSet.HHWorkers = vecs.Worker
     vecsSet.HHNWAdults = vecs.NWAdults
+    vecsSet.MaxAdultAgeCat = vecs.AdultAgeCat
     SetDataVectors(vwJ +"|", vecsSet,)
     CloseView(vwJ)
     CloseView(vwA)
@@ -479,4 +485,11 @@ Macro "Calculate Auto Ownership" (Args, trip_types)
     v2 = v1 - 1
     SetDataVector(hh_vw + "|", "Autos", v2, )
     CloseView(hh_vw)
+endmacro
+
+
+Macro "Determine CAV Households" (Args)
+//Predict CAV ownership at household level.i.e. households either own CAV or HV
+//Prediction based on income category and MaxAdultAgeCat (18-45 yrs old have higher probability to own CAV)
+//The resulted total CAVs / total Auto should equal to Args.CAV
 endmacro
