@@ -7,6 +7,7 @@ Macro "Home-based Productions" (Args)
     RunMacro("Apply Production Rates", Args)
     RunMacro("Classify Households by Market Segment", Args)
     RunMacro("Apply Calibration Factors", Args)
+    RunMacro("CAV Generation Adjustment", Args)
 
     return(1)
 endmacro
@@ -161,6 +162,7 @@ Macro "Classify Households by Market Segment" (Args)
     hh_file = Args.Households
     per_file = Args.Persons
     se_file = Args.SE
+    mpr = Args.CAV
 
     // Classify households by market segment
     hh_vw = OpenTable("hh", "FFB", {hh_file})
@@ -168,15 +170,16 @@ Macro "Classify Households by Market Segment" (Args)
         {"market_segment", "Character", 10, , , , , "Aggregate market segment this household belongs to"}
     }
     RunMacro("Add Fields", {view: hh_vw, a_fields: a_fields})
-    input = GetDataVectors(hh_vw + "|", {"HHSize", "IncomeCategory", "HHKids", "Autos"}, {OptArray: TRUE})
+    input = GetDataVectors(hh_vw + "|", {"HHSize", "IncomeCategory", "HHKids", "Autos", "is_CAV"}, {OptArray: TRUE})
     v_adults = input.HHSize - input.HHKids
+    v_cav = if input.is_CAV = 1 then "cav" else "hv"
     v_sufficient = if input.Autos = 0 then "v0"
         else if input.Autos < v_adults then "vi"
         else "vs"
     v_income = if input.IncomeCategory <= 2 then "il" else "ih"
     v_market = if v_sufficient = "v0"
         then "v0"
-        else v_income + v_sufficient
+        else v_cav + v_income + v_sufficient
     SetDataVector(hh_vw + "|", "market_segment", v_market, )
 
     // Copy this segment info to the person table
@@ -218,7 +221,7 @@ Macro "Apply Calibration Factors" (Args)
         SetView(per_vw)
         query = "Select * where market_segment = '"
         if segment = "v0" then query = query + segment + "'"
-        else query = query + "ih" + segment + "' or market_segment = '" + "il" + segment + "'"
+        else query = query + "cavih" + segment + "' or market_segment = 'cavil" + segment + "' or market_segment = 'hvih" + segment + "' or market_segment = 'hvil" + segment + "'"
         n = SelectByQuery("sel", "several", query)
         if n = 0 then Throw("no records found")
     
@@ -235,4 +238,36 @@ Macro "Apply Calibration Factors" (Args)
 
     CloseView(per_vw)
     CloseView(factor_vw)
+endmacro
+
+/*
+Apply trip rate adjustment for CAV households
+*/
+Macro "CAV Generation Adjustment" (Args)
+    per_file = Args.Persons
+    //determine adjustment factor
+    mpr = Args.CAV
+    //factor_file = Args.ProdCalibFactors
+    if mpr = "MH" then factor = 1.09 else if mpr = "H" then factor = 1.15
+
+    //retrieve trip type
+    trip_types = RunMacro("Get HB Trip Types", Args)
+
+    //adjustment
+    per_vw = OpenTable("per", "FFB", {per_file})
+
+    SetView(per_vw)
+    query = "Select * where market_segment = 'cavihvi' or market_segment = 'cavihvs' or market_segment = 'cavilvi' or market_segment = 'cavilvs'"
+    n = SelectByQuery("sel", "several", query)
+    if n = 0 then Throw("no CAV segment records found") 
+    
+    output = null
+    for i = 1 to trip_types.length do
+        trip_type = trip_types[i]
+
+        v = GetDataVector(per_vw + "|sel", trip_type, )
+        output.(trip_type) = v * factor
+    end
+    SetDataVectors(per_vw + "|sel", output, )
+    
 endmacro

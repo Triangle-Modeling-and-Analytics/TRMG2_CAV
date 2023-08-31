@@ -45,7 +45,7 @@ Macro "Aggregate HB Moto Trips" (Args)
     // Re-org data and append to SE    
     se_df = CreateObject("df", se_file)
     se_df.select("TAZ")
-    segments = {"v0", "ilvi", "ihvi", "ilvs", "ihvs"}
+    segments = {"v0", "cavilvi", "cavihvi", "cavilvs", "cavihvs", "hvilvi", "hvihvi", "hvilvs", "hvihvs"}
     for segment in segments do
         df2 = df.copy()
         df2.filter("market_segment = '" + segment + "'")
@@ -66,9 +66,11 @@ Macro "Aggregate HB Moto Trips" (Args)
         if Lower(trip_type) = "w_hb_w_all" then continue
         for segment in segments do
             if segment = "v0" then continue
-            if Position(segment, "vi") > 0 
-                then new_segment = "vi"
-                else new_segment = "vs"
+            if Right(segment, 2) = "vi" and Left(segment, 3) = "cav"
+                then new_segment = "cavvi"
+                else if Right(segment, 2) = "vs" and Left(segment, 3) = "cav" then new_segment = "cavvs"
+                else if Right(segment, 2) = "vi" and Left(segment, 2) = "hv" then new_segment = "hvvi"
+                else new_segment = "hvvs"
 
             from_field = trip_type + "_" + segment
             to_field = trip_type + "_" + new_segment

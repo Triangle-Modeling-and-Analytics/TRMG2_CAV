@@ -497,9 +497,11 @@ Determine link capacities
 */
 
 Macro "Capacity" (Args)
-
+    mpr = Args.CAV
     link_dbd = Args.Links
     cap_file = Args.Capacity
+    // Check if the selected capacity matches CAV MPR
+    if Position(cap_file, mpr) = 0 then Throw("Capacity file does not match CAV MPR. Please select the right one in the parameter setup page.")
     capfactors_file = Args.CapacityFactors
 
     // Create a map and add fields to be filled in

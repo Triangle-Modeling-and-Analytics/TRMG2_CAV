@@ -330,7 +330,7 @@ Macro "Generate Tabulations"(Args)
     expr3 = CreateExpression(vw_perM, "Senior", "if Age >= 65 then 1 else 0",)
     expr4 = CreateExpression(vw_perM, "Worker", "if EmploymentStatus = 1 or EmploymentStatus = 2 or EmploymentStatus = 4 or EmploymentStatus = 5 then 1 else 0",)
     expr5 = CreateExpression(vw_perM, "NWAdults", "if Age >= 18 and Worker = 0 then 1 else 0",)
-    expr5 = CreateExpression(vw_perM, "AdultAgeCat", "if Age < 18 then 0 elseif Age >= 18 and Age <=44 then 2 else 1",)
+    expr6 = CreateExpression(vw_perM, "AdultAgeCat", "if Age < 18 then 0 else if Age >= 18 and Age <=44 then 2 else 1",)
 
 
     // Aggregate person table by 'HouseholdID' and sum the above expression fields
@@ -340,13 +340,13 @@ Macro "Generate Tabulations"(Args)
     
     // Join aggregation file to HH table and copy over values
     vwJ = JoinViews("Aggr_HH", specs[1], GetFieldFullSpec(vw_hhM, "HouseholdID"),)
-    vecs = GetDataVectors(vwJ + "|", {"Kid", "AdultUnder65", "Senior", "Worker", "NWAdults", "AdultAgeCat"}, {OptArray: 1})
+    vecs = GetDataVectors(vwJ + "|", {"Kid", "AdultUnder65", "Senior", "Worker", "NWAdults", "High AdultAgeCat"}, {OptArray: 1})
     vecsSet.HHKids = vecs.Kid
     vecsSet.HHAdultsUnder65 = vecs.AdultUnder65
     vecsSet.HHSeniors = vecs.Senior
     vecsSet.HHWorkers = vecs.Worker
     vecsSet.HHNWAdults = vecs.NWAdults
-    vecsSet.MaxAdultAgeCat = vecs.AdultAgeCat
+    vecsSet.MaxAdultAgeCat = vecs.[High AdultAgeCat]
     SetDataVectors(vwJ +"|", vecsSet,)
     CloseView(vwJ)
     CloseView(vwA)
@@ -489,7 +489,38 @@ endmacro
 
 
 Macro "Determine CAV Households" (Args)
-//Predict CAV ownership at household level.i.e. households either own CAV or HV
-//Prediction based on income category and MaxAdultAgeCat (18-45 yrs old have higher probability to own CAV)
-//The resulted total CAVs / total Auto should equal to Args.CAV
+    //Predict CAV ownership at household level.i.e. households either own CAV or HV
+    //Prediction based on income category and MaxAdultAgeCat (18-45 yrs old have higher probability to own CAV)
+    //The resulted total CAVs / total Auto should equal to Args.CAV
+    CAV_probability_table = Args.CAV_prob
+    hh_file = Args.Households
+
+    hh_vw = OpenTable("hh", "FFB", {hh_file})
+    a_fields =  {
+        {"is_CAV", "Integer", 10, ,,,, "HH is CAV HH = 1 else 0"},
+        {"randomnum_CAV", "Real", 10, 2,,,, "HH is CAV HH = 1 else 0"},
+        {"CAVs", "Integer", 10, ,,,, "Number of CAVs household owned"}
+        }
+    RunMacro("Add Fields", {view: hh_vw, a_fields: a_fields})
+
+    cav_prob_vw = OpenTable("cav_prob", "CSV", {CAV_probability_table})
+    jv = JoinViewsMulti(
+            "jv", 
+            {hh_vw + ".MaxAdultAgeCat", hh_vw + ".IncomeCategory"},
+            {cav_prob_vw + ".MaxAdultAgeCat", cav_prob_vw + ".IncomeCategory"},
+            null
+    )
+    v_cav_prob = GetDataVector(jv + "|", "Probability", )
+    v_autos = GetDataVector(jv + "|", "Autos", )
+    SetRandomSeed(1)
+    v_randomnum_CAV = RandSamples(v_cav_prob.length, "Uniform", )
+    SetDataVector(jv + "|", "randomnum_CAV", v_randomnum_CAV, )
+    v_is_cav = if v_randomnum_CAV < v_cav_prob then 1 else 0
+    v_cavs = v_autos * v_is_cav
+    SetDataVector(jv + "|", "is_CAV", v_is_cav, )
+    SetDataVector(jv + "|", "CAVs", v_cavs, )
+
+    CloseView(jv)
+    CloseView(cav_prob_vw)
+    CloseView(hh_vw)
 endmacro
