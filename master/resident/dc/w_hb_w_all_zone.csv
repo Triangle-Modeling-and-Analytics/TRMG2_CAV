@@ -1,12 +1,23 @@
 Expression,Segment,Coefficient,Description
-se.w_hbw_size_H.D,ihvi,0.676,Size term for high income workers
-se.w_hbw_size_H.D,ihvs,0.676,Size term for high income workers
-se.w_hbw_size_L.D,ilvi,0.676,Size term for low income workers
-se.w_hbw_size_L.D,ilvs,0.676,Size term for low income workers
+se.w_hbw_size_H.D,hvihvi,0.676,Size term for high income workers
+se.w_hbw_size_H.D,hvihvs,0.676,Size term for high income workers
+se.w_hbw_size_L.D,hvilvi,0.676,Size term for low income workers
+se.w_hbw_size_L.D,hvilvs,0.676,Size term for low income workers
+se.w_hbw_size_H.D,cavihvi,0.676,Size term for high income workers
+se.w_hbw_size_H.D,cavihvs,0.676,Size term for high income workers
+se.w_hbw_size_L.D,cavilvi,0.676,Size term for low income workers
+se.w_hbw_size_L.D,cavilvs,0.676,Size term for low income workers
 se.w_hbw_size_L.D,v0,0.676,Size term for low income workers
 nz(mc_logsums.TransitComposite),,0.0601,
 intra_cluster.IZ,,0.815,
-sov_skim.CongTime,,-0.0965,
+sov_skim.CongTime,hvihvi,-0.0965,
+sov_skim.CongTime,hvihvs,-0.0965,
+sov_skim.CongTime,hvilvi,-0.0965,
+sov_skim.CongTime,hvilvs,-0.0965,
+sov_skim.CongTime*0.86,cavihvi,-0.0965,
+sov_skim.CongTime*0.86,cavihvs,-0.0965,
+sov_skim.CongTime*0.86,cavilvi,-0.0965,
+sov_skim.CongTime*0.86,cavilvs,-0.0965,
 se.access_hospital_sov.D,,0.195,
 se.access_transit.D,,0.0322,
 se.access_walk.D,v0,0.353,
