@@ -50,14 +50,14 @@ hov2,hov_skim.CongTime,hvihvs,-0.1164,Travel time
 hov2,hov_skim.CongTime,hvilvi,-0.1164,Travel time
 hov2,hov_skim.CongTime,hvilvi,-0.1164,Travel time
 hov2,hov_skim.CongTime,hvilvs,-0.1164,Travel time
-hov2,hov_skim.CongTime*0.6,cavihvi,-0.1164,Travel time
-hov2,hov_skim.CongTime*0.6,cavihvi,-0.1164,Travel time
-hov2,hov_skim.CongTime*0.6,cavihvi,-0.1164,Travel time
-hov2,hov_skim.CongTime*0.6,cavihvs,-0.1164,Travel time
-hov2,hov_skim.CongTime*0.6,cavihvs,-0.1164,Travel time
-hov2,hov_skim.CongTime*0.6,cavilvi,-0.1164,Travel time
-hov2,hov_skim.CongTime*0.6,cavilvi,-0.1164,Travel time
-hov2,hov_skim.CongTime*0.6,cavilvs,-0.1164,Travel time
+hov2,hov_skim.CongTime*0.4,cavihvi,-0.1164,Travel time
+hov2,hov_skim.CongTime*0.4,cavihvi,-0.1164,Travel time
+hov2,hov_skim.CongTime*0.4,cavihvi,-0.1164,Travel time
+hov2,hov_skim.CongTime*0.4,cavihvs,-0.1164,Travel time
+hov2,hov_skim.CongTime*0.4,cavihvs,-0.1164,Travel time
+hov2,hov_skim.CongTime*0.4,cavilvi,-0.1164,Travel time
+hov2,hov_skim.CongTime*0.4,cavilvi,-0.1164,Travel time
+hov2,hov_skim.CongTime*0.4,cavilvs,-0.1164,Travel time
 hov2,hov_skim.[TollCostHOV (Skim)],,-0.425906,Toll cost
 hov2,parking.MC_LS_Work.D,,0.5791,Parking
 hov3,Constant,hvihvi,-0.7876,Vehicle insufficient households
@@ -86,14 +86,14 @@ hov3,hov_skim.CongTime,hvihvs,-0.1164,Travel time
 hov3,hov_skim.CongTime,hvilvi,-0.1164,Travel time
 hov3,hov_skim.CongTime,hvilvi,-0.1164,Travel time
 hov3,hov_skim.CongTime,hvilvs,-0.1164,Travel time
-hov3,hov_skim.CongTime*0.6,cavihvi,-0.1164,Travel time
-hov3,hov_skim.CongTime*0.6,cavihvi,-0.1164,Travel time
-hov3,hov_skim.CongTime*0.6,cavihvi,-0.1164,Travel time
-hov3,hov_skim.CongTime*0.6,cavihvs,-0.1164,Travel time
-hov3,hov_skim.CongTime*0.6,cavihvs,-0.1164,Travel time
-hov3,hov_skim.CongTime*0.6,cavilvi,-0.1164,Travel time
-hov3,hov_skim.CongTime*0.6,cavilvi,-0.1164,Travel time
-hov3,hov_skim.CongTime*0.6,cavilvs,-0.1164,Travel time
+hov3,hov_skim.CongTime*0.4,cavihvi,-0.1164,Travel time
+hov3,hov_skim.CongTime*0.4,cavihvi,-0.1164,Travel time
+hov3,hov_skim.CongTime*0.4,cavihvi,-0.1164,Travel time
+hov3,hov_skim.CongTime*0.4,cavihvs,-0.1164,Travel time
+hov3,hov_skim.CongTime*0.4,cavihvs,-0.1164,Travel time
+hov3,hov_skim.CongTime*0.4,cavilvi,-0.1164,Travel time
+hov3,hov_skim.CongTime*0.4,cavilvi,-0.1164,Travel time
+hov3,hov_skim.CongTime*0.4,cavilvs,-0.1164,Travel time
 hov3,hov_skim.[TollCostHOV (Skim)],,-0.425906,Toll cost
 hov3,parking.MC_LS_Work.D,,0.5791,Parking
 knr_brt,Constant,,1.044,Constant
@@ -265,14 +265,14 @@ sov,sov_skim.CongTime,hvihvs,-0.1164,Travel time
 sov,sov_skim.CongTime,hvilvi,-0.1164,Travel time
 sov,sov_skim.CongTime,hvilvi,-0.1164,Travel time
 sov,sov_skim.CongTime,hvilvs,-0.1164,Travel time
-sov,sov_skim.CongTime*0.6,cavihvi,-0.1164,Travel time
-sov,sov_skim.CongTime*0.6,cavihvi,-0.1164,Travel time
-sov,sov_skim.CongTime*0.6,cavihvi,-0.1164,Travel time
-sov,sov_skim.CongTime*0.6,cavihvs,-0.1164,Travel time
-sov,sov_skim.CongTime*0.6,cavihvs,-0.1164,Travel time
-sov,sov_skim.CongTime*0.6,cavilvi,-0.1164,Travel time
-sov,sov_skim.CongTime*0.6,cavilvi,-0.1164,Travel time
-sov,sov_skim.CongTime*0.6,cavilvs,-0.1164,Travel time
+sov,sov_skim.CongTime*0.4,cavihvi,-0.1164,Travel time
+sov,sov_skim.CongTime*0.4,cavihvi,-0.1164,Travel time
+sov,sov_skim.CongTime*0.4,cavihvi,-0.1164,Travel time
+sov,sov_skim.CongTime*0.4,cavihvs,-0.1164,Travel time
+sov,sov_skim.CongTime*0.4,cavihvs,-0.1164,Travel time
+sov,sov_skim.CongTime*0.4,cavilvi,-0.1164,Travel time
+sov,sov_skim.CongTime*0.4,cavilvi,-0.1164,Travel time
+sov,sov_skim.CongTime*0.4,cavilvs,-0.1164,Travel time
 sov,sov_skim.[TollCostSOV (Skim)],,-0.425906,Toll cost
 sov,parking.MC_LS_Work.D,,0.5791,Parking
 w_brt,Constant,hvihvi,0.084,Path type constant = -.25 (visibility) * 15 (mins) * IVTTcoef
@@ -349,7 +349,7 @@ sav_brt,Constant,,0.084,Path type constant = -.25 (visibility) * 15 (mins) * IVT
 sav_brt,Constant,,0.126,Path type constant = -.25 (visibility) * 22.5 (mins) * IVTTcoef
 sav_brt,knr_brt_skim.[In-Vehicle Time] * .95,,-0.022449,IVTT (discounted)
 sav_brt,knr_brt_skim.Fare,,-0.1132,Transit fare
-sav_brt,knr_brt_skim.[Access Drive Time]*0.7,,-0.1138,Access walk time
+sav_brt,knr_brt_skim.[Access Drive Time]*0.4,,-0.1138,Access walk time
 sav_brt,knr_brt_skim.[Initial Wait Time],,-0.0437,Initial wait time
 sav_brt,knr_brt_skim.[Transfer Wait Time],,-0.03,Transfer wait time
 sav_brt,knr_brt_skim.[Egress Walk Time],,-0.051437,Egress walk time
@@ -365,7 +365,7 @@ sav_cr,Constant,cavilvs,0.505,Path type constant = -1 (visibility) * 22.5 (mins)
 sav_cr,Constant,,1.044,Constant
 sav_cr,knr_cr_skim.[In-Vehicle Time] * .8,,-0.022449,IVTT (discounted)
 sav_cr,knr_cr_skim.Fare,,-0.1132,Transit fare
-sav_cr,knr_cr_skim.[Access Drive Time]*0.7,,-0.1138,Access walk time
+sav_cr,knr_cr_skim.[Access Drive Time]*0.4,,-0.1138,Access walk time
 sav_cr,knr_cr_skim.[Initial Wait Time],,-0.0437,Initial wait time
 sav_cr,knr_cr_skim.[Transfer Wait Time],,-0.03,Transfer wait time
 sav_cr,knr_cr_skim.[Egress Walk Time],,-0.051437,Egress walk time
@@ -380,7 +380,7 @@ sav_eb,knr_eb_skim.[Number of Transfers] > 1,,-0.3324,High transfers
 sav_lb,Constant,,1.044,Constant
 sav_lb,knr_lb_skim.[In-Vehicle Time],,-0.022449,IVTT
 sav_lb,knr_lb_skim.Fare,,-0.1132,Transit fare
-sav_lb,knr_lb_skim.[Access Drive Time]*0.7,,-0.1138,Access walk time
+sav_lb,knr_lb_skim.[Access Drive Time]*0.4,,-0.1138,Access walk time
 sav_lb,knr_lb_skim.[Initial Wait Time],,-0.0437,Initial wait time
 sav_lb,knr_lb_skim.[Transfer Wait Time],,-0.03,Transfer wait time
 sav_lb,knr_lb_skim.[Egress Walk Time],,-0.051437,Egress walk time
@@ -396,7 +396,7 @@ sav_lr,Constant,cavilvs,0.253,Path type constant = -.5 (visibility) * 22.5 (mins
 sav_lr,Constant,,1.044,Constant
 sav_lr,knr_lr_skim.[In-Vehicle Time] * .9,,-0.022449,IVTT (discounted)
 sav_lr,knr_lr_skim.Fare,,-0.1132,Transit fare
-sav_lr,knr_lr_skim.[Access Drive Time]*0.7,,-0.1138,Access walk time
+sav_lr,knr_lr_skim.[Access Drive Time]*0.4,,-0.1138,Access walk time
 sav_lr,knr_lr_skim.[Initial Wait Time],,-0.0437,Initial wait time
 sav_lr,knr_lr_skim.[Transfer Wait Time],,-0.03,Transfer wait time
 sav_lr,knr_lr_skim.[Egress Walk Time],,-0.051437,Egress walk time

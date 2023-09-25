@@ -22,8 +22,8 @@ hov2,Constant,cavvs,2.889195,Additional Calibration Constant
 hov2,Constant,,-3.498,Constant
 hov2,hov_skim.CongTime,hvvi,-0.1131,Travel time
 hov2,hov_skim.CongTime,hvvs,-0.1131,Travel time
-hov2,hov_skim.CongTime*0.7,cavvi,-0.1131,Travel time
-hov2,hov_skim.CongTime*0.7,cavvs,-0.1131,Travel time
+hov2,hov_skim.CongTime*0.4,cavvi,-0.1131,Travel time
+hov2,hov_skim.CongTime*0.4,cavvs,-0.1131,Travel time
 hov2,hov_skim.[TollCostHOV (Skim)],,-0.570348,Toll cost
 hov2,se.HHSize1Pct.O,,-0.8464,Percent of 1-person HHs
 hov2,parking.MC_LS_NonWork.D,,0.5305,Parking
@@ -35,8 +35,8 @@ hov3,Constant,cavvs,2.893158,Additional Calibration Constant
 hov3,Constant,,-3.49,
 hov3,hov_skim.CongTime,hvvi,-0.1131,Travel time
 hov3,hov_skim.CongTime,hvvs,-0.1131,Travel time
-hov3,hov_skim.CongTime*0.7,cavvi,-0.1131,Travel time
-hov3,hov_skim.CongTime*0.7,cavvs,-0.1131,Travel time
+hov3,hov_skim.CongTime*0.4,cavvi,-0.1131,Travel time
+hov3,hov_skim.CongTime*0.4,cavvs,-0.1131,Travel time
 hov3,hov_skim.[TollCostHOV (Skim)],,-0.570348,Toll cost
 hov3,se.HHSize1Pct.O,,-0.8464,Percent of 1-person HHs
 hov3,parking.MC_LS_NonWork.D,,0.5305,Parking
@@ -60,8 +60,8 @@ sov,Constant,cavvs,2.734887,Additional Calibration Constant
 sov,Constant,,-3.401,
 sov,sov_skim.CongTime,hvvi,-0.1131,Travel time
 sov,sov_skim.CongTime,hvvs,-0.1131,Travel time
-sov,sov_skim.CongTime*0.7,cavvi,-0.1131,Travel time
-sov,sov_skim.CongTime*0.7,cavvs,-0.1131,Travel time
+sov,sov_skim.CongTime*0.4,cavvi,-0.1131,Travel time
+sov,sov_skim.CongTime*0.4,cavvs,-0.1131,Travel time
 sov,sov_skim.[TollCostSOV (Skim)],,-0.570348,Toll cost
 sov,parking.MC_LS_NonWork.D,,0.5305,Parking
 w_brt,Constant,v0,1.0904,Zero-vehicle households

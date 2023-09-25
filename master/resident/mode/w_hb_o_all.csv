@@ -20,8 +20,8 @@ hov2,Constant,,3.627,Constant
 hov2,se.HiIncomePct.O,,0.08253,High income
 hov2,hov_skim.CongTime,hvvi,-0.1062,Travel time
 hov2,hov_skim.CongTime,hvvs,-0.1062,Travel time
-hov2,hov_skim.CongTime*0.7,cavvi,-0.1062,Travel time
-hov2,hov_skim.CongTime*0.7,cavvs,-0.1062,Travel time
+hov2,hov_skim.CongTime*0.4,cavvi,-0.1062,Travel time
+hov2,hov_skim.CongTime*0.4,cavvs,-0.1062,Travel time
 hov2,hov_skim.[TollCostHOV (Skim)],,-0.388584,Toll
 hov3,Constant,v0,-99,Auto Availability
 hov3,Constant,hvvi,1.141276,Additional Calibration Constant
@@ -32,8 +32,8 @@ hov3,Constant,,3.297,Constant
 hov3,se.HiIncomePct.O,,0.08253,High income
 hov3,hov_skim.CongTime,hvvi,-0.1062,Travel time
 hov3,hov_skim.CongTime,hvvs,-0.1062,Travel time
-hov3,hov_skim.CongTime*0.7,cavvi,-0.1062,Travel time
-hov3,hov_skim.CongTime*0.7,cavvs,-0.1062,Travel time
+hov3,hov_skim.CongTime*0.4,cavvi,-0.1062,Travel time
+hov3,hov_skim.CongTime*0.4,cavvs,-0.1062,Travel time
 hov3,hov_skim.[TollCostHOV (Skim)],,-0.388584,Toll
 other_auto,Constant,v0,1.993,Zero-vehicle households
 other_auto,Constant,v0,0.50935,Additional Calibration Constant
@@ -54,8 +54,8 @@ sov,Constant,,4.704,Constant
 sov,se.HiIncomePct.O,,0.08253,High income
 sov,sov_skim.CongTime,hvvi,-0.1062,Travel time
 sov,sov_skim.CongTime,hvvs,-0.1062,Travel time
-sov,sov_skim.CongTime*0.7,cavvi,-0.1062,Travel time
-sov,sov_skim.CongTime*0.7,cavvs,-0.1062,Travel time
+sov,sov_skim.CongTime*0.4,cavvi,-0.1062,Travel time
+sov,sov_skim.CongTime*0.4,cavvs,-0.1062,Travel time
 sov,sov_skim.[TollCostSOV (Skim)],,-0.388584,Toll
 w_brt,Constant,v0,4.4532,Vehicle insufficient households
 w_brt,Constant,hvvi,4.104,Vehicle insufficient households

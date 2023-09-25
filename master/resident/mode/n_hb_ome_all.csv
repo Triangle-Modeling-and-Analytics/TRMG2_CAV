@@ -26,8 +26,8 @@ hov2,parking.MC_LS_NonWork.D,,0.05833,Parking
 hov2,se.HiIncomePct.O,,0.738,High income
 hov2,hov_skim.CongTime,hvvi,-0.162,Travel time
 hov2,hov_skim.CongTime,hvvs,-0.162,Travel time
-hov2,hov_skim.CongTime*0.7,cavvi,-0.162,Travel time
-hov2,hov_skim.CongTime*0.7,cavvs,-0.162,Travel time
+hov2,hov_skim.CongTime*0.4,cavvi,-0.162,Travel time
+hov2,hov_skim.CongTime*0.4,cavvs,-0.162,Travel time
 hov2,hov_skim.[TollCostHOV (Skim)],,-0.816944,Toll cost
 hov2,se.HHSize1Pct.O,,-3.111,Percent of 1-person HHs
 hov3,Constant,v0,0.6791,Zero-vehicle households
@@ -42,8 +42,8 @@ hov3,parking.MC_LS_NonWork.D,,0.05833,Parking
 hov3,se.HiIncomePct.O,,0.738,High income
 hov3,hov_skim.CongTime,hvvi,-0.162,Travel time
 hov3,hov_skim.CongTime,hvvs,-0.162,Travel time
-hov3,hov_skim.CongTime*0.7,cavvi,-0.162,Travel time
-hov3,hov_skim.CongTime*0.7,cavvs,-0.162,Travel time
+hov3,hov_skim.CongTime*0.4,cavvi,-0.162,Travel time
+hov3,hov_skim.CongTime*0.4,cavvs,-0.162,Travel time
 hov3,hov_skim.[TollCostHOV (Skim)],,-0.816944,Toll cost
 hov3,se.HHSize1Pct.O,,-3.111,Percent of 1-person HHs
 other_auto,Constant,v0,2.825,Zero-vehicle households
@@ -67,8 +67,8 @@ sov,parking.MC_LS_NonWork.D,,0.05833,Parking
 sov,se.HiIncomePct.O,,1.232,High income
 sov,sov_skim.CongTime,hvvi,-0.162,Travel time
 sov,sov_skim.CongTime,hvvs,-0.162,Travel time
-sov,sov_skim.CongTime*0.7,cavvi,-0.162,Travel time
-sov,sov_skim.CongTime*0.7,cavvs,-0.162,Travel time
+sov,sov_skim.CongTime*0.4,cavvi,-0.162,Travel time
+sov,sov_skim.CongTime*0.4,cavvs,-0.162,Travel time
 sov,sov_skim.[TollCostSOV (Skim)],,-0.816944,Toll cost
 w_brt,Constant,v0,3.393,Zero-vehicle households
 w_brt,Constant,hvvi,3.393,Vehicle insufficient households
