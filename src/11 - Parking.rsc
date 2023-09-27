@@ -476,9 +476,9 @@ Macro "HB Apply Parking Probabilities" (Args)
     parking_prob_file = park_dir + "/ParkingDCProbability.mtx"
     logsum_file = park_dir + "/ParkingLogsums.bin"
     periods = RunMacro("Get Unconverged Periods", Args)
-    skims_dir = scen_dir + "\\output\\skims\\"
+    skims_dir = out_dir + "\\skims"
     trip_types = RunMacro("Get HB Trip Types", Args)
-    sov_skim = skims_dir + "roadway/avg_skim_AM_W_HB_sov.mtx"
+    sov_skim = skims_dir + "/roadway/avg_skim_AM_W_HB_sov.mtx"
     // the auto cores to apply parking to
     auto_cores = {
         "sov",
@@ -532,11 +532,11 @@ Macro "NHB Apply Parking Probabilities" (Args)
     
     out_dir = Args.[Output Folder]
     park_dir = out_dir + "/resident/parking"
-    skims_dir = scen_dir + "\\output\\skims\\"
+    skims_dir = out_dir + "\\skims"
     parking_prob_file = park_dir + "/ParkingDCProbability.mtx"
     logsum_file = park_dir + "/ParkingLogsums.bin"
     periods = RunMacro("Get Unconverged Periods", Args)
-    sov_skim = skims_dir + "roadway/avg_skim_AM_All_NHB_sov.mtx"
+    sov_skim = skims_dir + "/roadway/avg_skim_AM_All_NHB_sov.mtx"
 
     opts = null
     opts.sov_skim = sov_skim
@@ -598,7 +598,7 @@ Macro "Calculate CAV ParkHome Probability" (MacroOpts)
     core_names = park_mtx.GetCoreNames()
     park_mtx.AddCores({"ParkHome_prob"})
     park_cores = park_mtx.GetCores()
-    park_cores.(ParkHome_prob) := if park_cores.("Length (Skim)") > 20 then 0 else if park_cores.("Length (Skim)") > 15 then 0.1 else if park_cores.("Length (Skim)") > 10 then 0.2 else if park_cores.("Length (Skim)") > 5 then 0.35 else 0.5    
+    park_cores.("ParkHome_prob") := if park_cores.("Length (Skim)") > 20 then 0 else if park_cores.("Length (Skim)") > 15 then 0.1 else if park_cores.("Length (Skim)") > 10 then 0.2 else if park_cores.("Length (Skim)") > 5 then 0.35 else 0.5    
     park_mtx.DropCores(core_names)
 
 endmacro
@@ -644,7 +644,6 @@ Macro "Calculate Parking Cores" (MacroOpts)
             NewID: "TAZ"
             })
     end
-    trip_mtx.SetColIndex("ParkingDistricts")
     
     // Divert portion of parking trips to parkhome mode for CAV based on distance (stored in the p)
     // Get CAV parkhome probablilty and apply to trip matrix
@@ -656,22 +655,24 @@ Macro "Calculate Parking Cores" (MacroOpts)
     fromhome_core_name = auto_core + "_parkhome_fromhome"
     trip_mtx.AddCores({tohome_core_name, fromhome_core_name})
     cores = trip_mtx.GetCores()
-    cores.(fromhome_core_name) = cores.(auto_core) * parkhome_core //multiply trips by park home probability to get parkhome OD (home to park leg)
+    cores.(fromhome_core_name) := cores.(auto_core) * parkhome_core //multiply trips by park home probability to get parkhome OD (home to destination/park leg)
 
-    // Transpose park home OD to create park to home (reverse return)
+    // Transpose park home OD to create destination/park to home (return)
     {drive, path, name, ext} = SplitPath(trip_mtx_file)    
     trans_mtx_file = drive + path + name + "_transposed.mtx"
     trip_mtx.Transpose({
         OutputFile: trans_mtx_file,
         Cores: {fromhome_core_name}
     })
+    trans_mtx = CreateObject("Matrix", trans_mtx_file)
     trans_core = trans_mtx.GetCore(fromhome_core_name)
     cores.(tohome_core_name) := trans_core
     trans_mtx = null
     trans_core = null
     cores = null
     DeleteFile(trans_mtx_file)
-
+    
+    trip_mtx.SetColIndex("ParkingDistricts")
     // Begin original parking model
     park_modes = {"walk", "shuttle"}
     for park_mode in park_modes do
@@ -692,8 +693,8 @@ Macro "Calculate Parking Cores" (MacroOpts)
         trip_mtx.AddCores({park_mode_core})
         cores = trip_mtx.GetCores()
         if park_mode = "shuttle"
-            then cores.(park_mode_core) := (cores.(auto_core) - cores.(auto_core + "_parkhome")) * v_prob_shuttle // apply shuttle/walk probability to non-park home
-            else cores.(park_mode_core) := (cores.(auto_core) - cores.(auto_core + "_parkhome")) * (1 - v_prob_shuttle) 
+            then cores.(park_mode_core) := (cores.(auto_core) - cores.(fromhome_core_name)) * v_prob_shuttle // apply shuttle/walk probability to non-park home OD
+            else cores.(park_mode_core) := (cores.(auto_core) - cores.(fromhome_core_name)) * (1 - v_prob_shuttle) 
         cores = null
 
         // The CBD and Univ probability cores are merged since they don't
@@ -732,7 +733,7 @@ Macro "Calculate Parking Cores" (MacroOpts)
     if core_names.position("w_lb") = 0 then trip_mtx.AddCores({"w_lb"})
     cores = trip_mtx.GetCores()
     cores.(auto_core) := nz(cores.(auto_core + "_parkwalk_topark")) +
-        nz(cores.(auto_core + "_parkshuttle_topark")) + nz(auto_core + "_parkhome")
+        nz(cores.(auto_core + "_parkshuttle_topark")) + nz(cores.(fromhome_core_name))
     cores.w_lb := nz(cores.w_lb) + nz(cores.(auto_core + "_parkshuttle_frompark"))
     // TODO: add walk from park trips to non-motorized matrix?
     // trip_mtx.DropCores({
