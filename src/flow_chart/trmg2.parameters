@@ -139,3 +139,4 @@
 
         Args.CAV = {"Type":"string" , "Style": "MPRList", "Value":"None", "Description":"CAV Market Penetration Rate. None = 0%, MH = 70%, H = 95%" }
         Args.CAV_prob = { "Type":"File" , "Value":"%Model Folder%\\other\\cav\\cav_probablity.csv", "Description":"CAV household probability cross classification table" } 
+        Args.sav_factor = {"Type":"double" , "Value":0.67, "Description":"SAV empty mile percentage. None = 0%, MH = 67%, H = 50%" }

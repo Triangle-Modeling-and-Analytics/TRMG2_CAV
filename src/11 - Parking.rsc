@@ -733,7 +733,7 @@ Macro "Calculate Parking Cores" (MacroOpts)
     if core_names.position("w_lb") = 0 then trip_mtx.AddCores({"w_lb"})
     cores = trip_mtx.GetCores()
     cores.(auto_core) := nz(cores.(auto_core + "_parkwalk_topark")) +
-        nz(cores.(auto_core + "_parkshuttle_topark")) + nz(cores.(fromhome_core_name))
+        nz(cores.(auto_core + "_parkshuttle_topark")) + nz(cores.(fromhome_core_name)) + nz(cores.(tohome_core_name))
     cores.w_lb := nz(cores.w_lb) + nz(cores.(auto_core + "_parkshuttle_frompark"))
     // TODO: add walk from park trips to non-motorized matrix?
     // trip_mtx.DropCores({
