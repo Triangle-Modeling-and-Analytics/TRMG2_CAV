@@ -85,8 +85,8 @@ Macro "Calculate MC" (Args)
     opts.primary_spec = {Name: "w_lb_skim"}
     for trip_type in trip_types do
         if Lower(trip_type) = "w_hb_w_all"
-            then opts.segments = {"v0", "cavilvi", "cavilvs", "cavihvi", "cavihvs", "hvilvi", "hvilvs", "hvihvi", "hvihvs"}
-            else opts.segments = {"v0", "cavvi", "cavvs", "hvvi", "hvvs"}
+            then opts.segments = {"v0", "ilvi", "ihvi", "ilvs", "ihvs"}
+            else opts.segments = {"v0", "vi", "vs"}
         opts.trip_type = trip_type
         opts.util_file = input_mc_dir + "/" + trip_type + ".csv"
         nest_file = input_mc_dir + "/" + trip_type + "_nest.csv"
@@ -156,8 +156,8 @@ Macro "Post Process Logsum" (Args)
     trip_types = RunMacro("Get HB Trip Types", Args)
     for trip_type in trip_types do
         if Lower(trip_type) = "w_hb_w_all"
-            then segments = {"v0", "cavilvi", "cavilvs", "cavihvi", "cavihvs", "hvilvi", "hvilvs", "hvihvi", "hvihvs"}
-            else segments = {"v0", "cavvi", "cavvs", "hvvi", "hvvs"}
+            then segments = {"v0", "ilvi", "ihvi", "ilvs", "ihvs"}
+            else segments = {"v0", "vi", "vs"}
         for period in periods do
             for segment in segments do
                 mtx_file = ls_dir + "/logsum_" + trip_type + "_" + segment + "_" + period + ".mtx"

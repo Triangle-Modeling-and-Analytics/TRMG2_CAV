@@ -138,4 +138,3 @@
      Section = "CAV"
 
         Args.CAV = {"Type":"string" , "Style": "MPRList", "Value":"None", "Description":"CAV Market Penetration Rate. None = 0%, MH = 70%, H = 95%" }
-        Args.CAV_prob = { "Type":"File" , "Value":"%Model Folder%\\other\\cav\\cav_probablity.csv", "Description":"CAV household probability cross classification table" } 

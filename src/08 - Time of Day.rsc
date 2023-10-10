@@ -29,8 +29,8 @@ Macro "Resident HB TOD" (Args)
         fac = v_fac[i]
 
         if type = "W_HB_W_All"
-            then segments = {"v0", "cavilvi", "cavilvs", "cavihvi", "cavihvs", "hvilvi", "hvilvs", "hvihvi", "hvihvs"}
-            else segments = {"v0", "cavvi", "cavvs", "hvvi", "hvvs"}
+            then segments = {"v0", "ilvi", "ilvs", "ihvi", "ihvs"}
+            else segments = {"v0", "vi", "vs"}
 
         for segment in segments do
             daily_name = type + "_" + segment

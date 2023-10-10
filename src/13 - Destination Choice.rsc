@@ -81,9 +81,9 @@ Macro "DC Attractions" (Args)
     // Balance these to match total hbw productions
     {p1, p2, p3, p4, p5, v_a} = GetDataVectors(
         se_vw + "|",
-        {"W_HB_W_All_v0", "W_HB_W_All_cavilvi", "W_HB_W_All_cavilvs", "W_HB_W_All_cavihvi", "W_HB_W_All_cavihvs", "W_HB_W_All_hvilvi", "W_HB_W_All_hvilvs", "W_HB_W_All_hvihvi", "W_HB_W_All_hvihvs","w_hbw_a"},
+        {"W_HB_W_All_v0", "W_HB_W_All_ilvi", "W_HB_W_All_ilvs", "W_HB_W_All_ihvi", "W_HB_W_All_ihvs", "w_hbw_a"},
     )
-    total_p = p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9
+    total_p = p1 + p2 + p3 + p4 + p5
     p_sum = VectorStatistic(total_p, "sum",)
     a_sum = VectorStatistic(v_a, "sum",)
     total_a = v_a * (p_sum / a_sum)
@@ -205,8 +205,8 @@ Macro "Calculate Destination Choice" (Args, trip_types)
     opts.primary_spec = {Name: "sov_skim"}
     for trip_type in trip_types do
         if Lower(trip_type) = "w_hb_w_all"
-            then segments = {"v0", "cavilvi", "cavihvi", "cavilvs", "cavihvs", "hvilvi", "hvihvi", "hvilvs", "hvihvs"}
-            else segments = {"v0", "cavvi", "cavvs", "hvvi", "hvvs"}
+            then segments = {"v0", "ilvi", "ihvi", "ilvs", "ihvs"}
+            else segments = {"v0", "vi", "vs"}
         opts.trip_type = trip_type
         opts.zone_utils = input_dc_dir + "/" + Lower(trip_type) + "_zone.csv"
         opts.cluster_data = input_dc_dir + "/" + Lower(trip_type) + "_cluster.csv"
@@ -284,7 +284,7 @@ Macro "Update Shadow Price" (Args)
     sp_vw = OpenTable("sp", "FFB", {sp_file})
 
     trip_type = "W_HB_W_All"
-    segments = {"v0", "cavilvi", "cavilvs", "cavihvi", "cavihvs", "hvilvi", "hvilvs", "hvihvi", "hvihvs"}
+    segments = {"v0", "ilvi", "ilvs", "ihvi", "ihvs"}
 
     v_sp = GetDataVector(sp_vw + "|", "hbw", )
     v_attrs = GetDataVector(se_vw + "|", "w_hbw_a", )
@@ -356,8 +356,8 @@ Macro "Apportion Resident HB Trips" (Args)
         // Resident trips
         for trip_type in trip_types do
             if Lower(trip_type) = "w_hb_w_all"
-                then segments = {"v0", "cavilvi", "cavilvs", "cavihvi", "cavihvs", "hvilvi", "hvilvs", "hvihvi", "hvihvs"}
-                else segments = {"v0", "cavvi", "cavvs", "hvvi", "hvvs"}
+                then segments = {"v0", "ilvi", "ilvs", "ihvi", "ihvs"}
+                else segments = {"v0", "vi", "vs"}
             
             out_mtx_file = trip_dir + "/pa_per_trips_" + trip_type + "_" + period + ".mtx"
             if GetFileInfo(out_mtx_file) <> null then DeleteFile(out_mtx_file)
