@@ -205,7 +205,7 @@ Macro "Airport Mode Choice" (Args)
     periods = RunMacro("Get Unconverged Periods", Args)
     
     for period in periods do 
-        mc_mtx_file = mc_dir + "/probabilities/probability_N_HB_OD_Long_cavvs_" + period + ".mtx" //assume at this point all airport trips will be CAV
+        mc_mtx_file = mc_dir + "/probabilities/probability_N_HB_OD_Long_vs_" + period + ".mtx"
         
         airport_mtx_file = trips_dir + "/airport_pa_trips_" + period + ".mtx"
         

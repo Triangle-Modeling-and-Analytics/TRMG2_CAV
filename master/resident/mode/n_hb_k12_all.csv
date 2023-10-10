@@ -6,8 +6,8 @@ hov2,Constant,cavvs,0.06579,Additional Calibration Constant
 hov2,Constant,,-0.2817,Constant
 hov2,hov_skim.CongTime,hvvi,-0.1478,Travel time
 hov2,hov_skim.CongTime,hvvs,-0.1478,Travel time
-hov2,hov_skim.CongTime*0.4,cavvi,-0.1478,Travel time
-hov2,hov_skim.CongTime*0.4,cavvs,-0.1478,Travel time
+hov2,hov_skim.CongTime*0.7,cavvi,-0.1478,Travel time
+hov2,hov_skim.CongTime*0.7,cavvs,-0.1478,Travel time
 hov2,se.LargeHHPct.O,,0.4896,Large household percentage
 hov3,Constant,hvvi,-1.505762,Additional Calibration Constant
 hov3,Constant,hvvs,0.053911,Additional Calibration Constant
@@ -16,8 +16,8 @@ hov3,Constant,cavvs,0.053911,Additional Calibration Constant
 hov3,Constant,,-0.02895,Constant
 hov3,hov_skim.CongTime,hvvi,-0.1478,Travel time
 hov3,hov_skim.CongTime,hvvs,-0.1478,Travel time
-hov3,hov_skim.CongTime*0.4,cavvi,-0.1478,Travel time
-hov3,hov_skim.CongTime*0.4,cavvs,-0.1478,Travel time
+hov3,hov_skim.CongTime*0.7,cavvi,-0.1478,Travel time
+hov3,hov_skim.CongTime*0.7,cavvs,-0.1478,Travel time
 hov3,se.LargeHHPct.O,,0.4896,Large household percentage
 other_auto,Constant,v0,-1.487627,Additional Calibration Constant
 other_auto,Constant,hvvi,-1.587573,Additional Calibration Constant
