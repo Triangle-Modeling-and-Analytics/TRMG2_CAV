@@ -51,7 +51,7 @@
         Args.TransponderRatioSUT = { "Type":"double" , "Value":0.70, "Description":"Ratio of SUTs with a toll transponder (0-1)" }
         Args.TransponderRatioMUT = { "Type":"double" , "Value":0.76, "Description":"Ratio of MUTs with a toll transponder (0-1)" }
         Args.periods = { Type:"hidden" , "Value": {"AM", "MD", "PM", "NT"}, "Description":"List of time periods in the model."}
-        Args.access_modes = { Type:"hidden" , "Value": {"w", "knr", "pnr", "auto_pay"} }
+        Args.access_modes = { Type:"hidden" , "Value": {"w", "knr", "pnr"} }
         
     Section = "Network Calculations|Transit"
         
