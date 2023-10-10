@@ -104,6 +104,3 @@
                                               {Name: "Motorized", Type: "real",  Fixed: "false"},
                                               {Name: "NonMotorized", Type: "real",  Fixed: "false"}}
                                     })
-
-    // CAV Market Penetration Rate
-    Styles.MPRList = Pme.DropList({ "Options": {"None", "MH", "H"} })
