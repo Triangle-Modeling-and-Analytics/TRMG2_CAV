@@ -7,7 +7,6 @@ lost during the conversion.
 
 Macro "Create Assignment Matrices" (Args)
 
-    RunMacro("Add SAV Trips", Args)
     RunMacro("HB Collapse Auto Modes", Args)
     RunMacro("HB Apply Parking Probabilities", Args)
     RunMacro("NHB Collapse Auto Modes", Args)
@@ -23,36 +22,6 @@ Macro "Create Assignment Matrices" (Args)
     RunMacro("Add University", Args)
 
     return(1)
-endmacro
-
-/*
-Add SAV trips after DC/MC
-*/
-
-Macro "Add SAV Trips" (Args)
-    
-    shares_file = Args.HBOtherShares
-    periods = RunMacro("Get Unconverged Periods", Args)
-    trip_types = RunMacro("Get HB Trip Types", Args)
-    out_dir = Args.[Output Folder]
-    trip_dir = out_dir + "/resident/trip_matrices"
-    sav_factor = Args.sav_factor
- 
-    for period in periods do
-        for trip_type in trip_types do
-            trip_mtx_file = trip_dir + "/pa_per_trips_" + trip_type + "_" + period + ".mtx"
-            trip_mtx = CreateObject("Matrix", trip_mtx_file)
-            core_names = trip_mtx.GetCoreNames()
-            if ArrayPosition(core_names, {"auto_pay"},) = 0 then continue
-            cores = trip_mtx.GetCores()
-
-            cores.("auto_pay") := cores.("auto_pay") * (1+sav_factor)
-
-        end
-    end
-
-    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/3 after Add SAV.csv"
-    RunMacro("Trip Conservation Snapshot", trip_dir, out_file)
 endmacro
 
 /*
@@ -207,7 +176,7 @@ Macro "HB Collapse Auto Modes" (Args)
     end
     CloseView(fac_vw)
 
-    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/4 after HB Collapse Auto Modes.csv"
+    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/3 after HB Collapse Auto Modes.csv"
     RunMacro("Trip Conservation Snapshot", trip_dir, out_file)
 endmacro
 
@@ -245,7 +214,7 @@ Macro "HB Occupancy" (Args)
     end
     CloseView(fac_vw)
 
-    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/5 after HB Occupancy.csv"
+    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/4 after HB Occupancy.csv"
     RunMacro("Trip Conservation Snapshot", assn_dir, out_file)
 endmacro
 
@@ -285,7 +254,7 @@ Macro "HB Collapse Trip Types" (Args)
         end
     end
 
-    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/6 after HB Collapse Trip Types.csv"
+    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/5 after HB Collapse Trip Types.csv"
     RunMacro("Trip Conservation Snapshot", assn_dir, out_file)
 endmacro
 
@@ -315,7 +284,7 @@ Macro "HB Remove Interim Matrices" (Args)
         if files_to_keep.position(name) = 0 then DeleteFile(file)
     end
 
-    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/7 after HB Remove Interim Matrices.csv"
+    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/6 after HB Remove Interim Matrices.csv"
     RunMacro("Trip Conservation Snapshot", assn_dir, out_file)
 endmacro
 
@@ -369,7 +338,7 @@ Macro "NHB Collapse Auto Modes" (Args)
         end
     end
 
-    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/8 nhb trips after NHB Collapse Auto Modes.csv"
+    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/7 nhb trips after NHB Collapse Auto Modes.csv"
     RunMacro("Trip Conservation Snapshot", nhb_dir, out_file)
 endmacro
 
@@ -453,7 +422,7 @@ Macro "NHB Collapse Matrices and Occupancy" (Args)
     end
     CloseView(hov3_vw)
 
-    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/9 after NHB Collapse Matrices and Occupancy.csv"
+    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/8 after NHB Collapse Matrices and Occupancy.csv"
     RunMacro("Trip Conservation Snapshot", assn_dir, out_file)
 endmacro
 
@@ -483,7 +452,7 @@ Macro "Add CVs and Trucks" (Args)
 
     out_file = Args.[Output Folder] + "/_summaries/trip_conservation/0 cv and truck trips.csv"
     RunMacro("Trip Conservation Snapshot", cv_dir, out_file)
-    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/10 after Add CVs and Trucks.csv"
+    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/9 after Add CVs and Trucks.csv"
     RunMacro("Trip Conservation Snapshot", assn_dir, out_file)
 endmacro
 
@@ -532,7 +501,7 @@ Macro "Add Externals" (Args)
 
     out_file = Args.[Output Folder] + "/_summaries/trip_conservation/0 external trips.csv"
     RunMacro("Trip Conservation Snapshot", ext_dir, out_file)
-    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/13 after Add Externals.csv"
+    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/12 after Add Externals.csv"
     RunMacro("Trip Conservation Snapshot", assn_dir, out_file)
 endmacro
 
@@ -562,6 +531,6 @@ Macro "Add University" (Args)
 
     out_file = Args.[Output Folder] + "/_summaries/trip_conservation/0 university trips.csv"
     RunMacro("Trip Conservation Snapshot", univ_dir, out_file)
-    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/14 after Add University.csv"
+    out_file = Args.[Output Folder] + "/_summaries/trip_conservation/13 after Add University.csv"
     RunMacro("Trip Conservation Snapshot", assn_dir, out_file)
 endmacro

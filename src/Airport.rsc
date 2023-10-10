@@ -203,45 +203,40 @@ Macro "Airport Mode Choice" (Args)
     trips_dir = Args.[Output Folder] + "\\airport"
     mc_dir = Args.[Output Folder] + "\\resident\\mode"
     periods = RunMacro("Get Unconverged Periods", Args)
-    veh_types = {"cav", "hv"}
-
+    
     for period in periods do 
-        for veh_type in veh_types do
-            mc_mtx_file = mc_dir + "/probabilities/probability_N_HB_OD_Long_" + veh_type + "vs_" + period + ".mtx" 
-            
-            airport_mtx_file = trips_dir + "/airport_pa_trips_" + period + ".mtx"
-            
-            out_mtx_file = trips_dir + "/airport_pa_mode_trips_" + veh_type + "_" + period + ".mtx"
-            if GetFileInfo(out_mtx_file) <> null then DeleteFile(out_mtx_file)
-            
-            CopyFile(mc_mtx_file, out_mtx_file)
-            out_mtx = CreateObject("Matrix")
-            out_mtx.LoadMatrix(out_mtx_file)
-            out_cores = out_mtx.GetCores()
-            
-            mc_mtx = CreateObject("Matrix")
-            mc_mtx.LoadMatrix(mc_mtx_file)
-            mc_cores = mc_mtx.GetCores()
-            mode_names = mc_mtx.GetCoreNames()
-            
-            airport_mtx = CreateObject("Matrix")
-            airport_mtx.LoadMatrix(airport_mtx_file)
-            airport_cores = airport_mtx.GetCores()
-            
-            for mode in mode_names do
-                if veh_type = "cav" then adjustment = 0.7 else adjustment = 0.3
-                out_cores.(mode) := 0
-                out_cores.(mode) := nz(airport_cores.("Trips")) * mc_cores.(mode) * adjustment
-            end
-            
-            out_cores = null
-            mc_cores = null
-            airport_cores = null
-            out_mtx = null
-            mc_mtx = null
-            airport_mtx = null
+        mc_mtx_file = mc_dir + "/probabilities/probability_N_HB_OD_Long_cavvs_" + period + ".mtx" //assume at this point all airport trips will be CAV
+        
+        airport_mtx_file = trips_dir + "/airport_pa_trips_" + period + ".mtx"
+        
+        out_mtx_file = trips_dir + "/airport_pa_mode_trips_" + period + ".mtx"
+        if GetFileInfo(out_mtx_file) <> null then DeleteFile(out_mtx_file)
+        
+        CopyFile(mc_mtx_file, out_mtx_file)
+        out_mtx = CreateObject("Matrix")
+        out_mtx.LoadMatrix(out_mtx_file)
+        out_cores = out_mtx.GetCores()
+        
+        mc_mtx = CreateObject("Matrix")
+        mc_mtx.LoadMatrix(mc_mtx_file)
+        mc_cores = mc_mtx.GetCores()
+        mode_names = mc_mtx.GetCoreNames()
+        
+        airport_mtx = CreateObject("Matrix")
+        airport_mtx.LoadMatrix(airport_mtx_file)
+        airport_cores = airport_mtx.GetCores()
+        
+        for mode in mode_names do
+            out_cores.(mode) := 0
+            out_cores.(mode) := nz(airport_cores.("Trips")) * mc_cores.(mode)
         end
-
+        
+        out_cores = null
+        mc_cores = null
+        airport_cores = null
+        out_mtx = null
+        mc_mtx = null
+        airport_mtx = null
     end
 
 endmacro
@@ -253,49 +248,46 @@ Separate out auto and transit trip tables
 Macro "Airport Separate Auto and Transit" (Args)
     trips_dir = Args.[Output Folder] + "\\airport"
     periods = RunMacro("Get Unconverged Periods", Args)
-    veh_types = {"cav", "hv"}
+    
     auto_modes = {"sov", "hov2", "hov3", "auto_pay", "other_auto"}
     
     for period in periods do
-        for veh_type in veh_types do
-            pa_mtx_file = trips_dir + "/airport_pa_mode_trips_" + veh_type + "_" + period + ".mtx"
-            auto_mtx_file = trips_dir + "/airport_pa_auto_trips_" + veh_type + "_" + period + ".mtx"
-            transit_mtx_file = trips_dir + "/airport_transit_trips_" + period + ".mtx"
-            
-            mtx = CreateObject("Matrix")
-            mtx.LoadMatrix(pa_mtx_file) 
-            mtx_cores = mtx.GetCores()
-            all_modes = mtx.GetCoreNames()	   
-            
-            transit_modes = ArrayExclude(all_modes, auto_modes)
-            if veh_type = "can" then do
-                matOpts = {{"File Name", transit_mtx_file}, {"Label", "Airport Transit Trips"}, {"File Based", "Yes"}, {"Tables", transit_modes}}
-                CopyMatrixStructure({mtx_cores[1][2]}, matOpts)
-            end
-
-            transit_mtx = CreateObject("Matrix")
-            transit_mtx.LoadMatrix(transit_mtx_file)
-            transit_cores = transit_mtx.GetCores()
-            
-            for transit_mode in transit_modes do
-                transit_cores.(transit_mode) := Nz(mtx_cores.(transit_mode)) + Nz(transit_cores.(transit_mode))
-            end
-            
-            transit_mtx = null
-            transit_cores = null
-            mtx_cores = null
-            mtx = null
-            
-            CopyFile(pa_mtx_file, auto_mtx_file)
-            
-            auto_mtx = CreateObject("Matrix")
-            auto_mtx.LoadMatrix(auto_mtx_file) 
-            auto_mtx.DropCores(transit_modes)
-            auto_mtx.Pack()
-            auto_mtx = null
-            
-            DeleteFile(pa_mtx_file)
+        pa_mtx_file = trips_dir + "/airport_pa_mode_trips_" + period + ".mtx"
+        auto_mtx_file = trips_dir + "/airport_pa_auto_trips_" + period + ".mtx"
+        transit_mtx_file = trips_dir + "/airport_transit_trips_" + period + ".mtx"
+        
+        mtx = CreateObject("Matrix")
+        mtx.LoadMatrix(pa_mtx_file) 
+        mtx_cores = mtx.GetCores()
+        all_modes = mtx.GetCoreNames()	   
+        
+        transit_modes = ArrayExclude(all_modes, auto_modes)
+        
+        matOpts = {{"File Name", transit_mtx_file}, {"Label", "Airport Transit Trips"}, {"File Based", "Yes"}, {"Tables", transit_modes}}
+        CopyMatrixStructure({mtx_cores[1][2]}, matOpts)
+        
+        transit_mtx = CreateObject("Matrix")
+        transit_mtx.LoadMatrix(transit_mtx_file)
+        transit_cores = transit_mtx.GetCores()
+        
+        for transit_mode in transit_modes do
+            transit_cores.(transit_mode) := Nz(mtx_cores.(transit_mode))
         end
+        
+        transit_mtx = null
+        transit_cores = null
+        mtx_cores = null
+        mtx = null
+        
+        CopyFile(pa_mtx_file, auto_mtx_file)
+        
+        auto_mtx = CreateObject("Matrix")
+        auto_mtx.LoadMatrix(auto_mtx_file) 
+        auto_mtx.DropCores(transit_modes)
+        auto_mtx.Pack()
+        auto_mtx = null
+        
+        DeleteFile(pa_mtx_file)
     end
 
 endmacro
@@ -308,8 +300,7 @@ Macro "Airport Directionality" (Args)
     trips_dir = Args.[Output Folder] + "\\airport"
     dir_factor_file = Args.[Input Folder] + "\\airport\\airport_directionality.csv"
     periods = RunMacro("Get Unconverged Periods", Args)
-    veh_types = {"cav", "hv"}
-
+    
     dir_factors = RunMacro("Read Parameter File", {
         file: dir_factor_file,
         names: "period",
@@ -317,95 +308,42 @@ Macro "Airport Directionality" (Args)
     })
     
     for period in periods do
-        for veh_type in veh_types do
-            pa_mtx_file = trips_dir + "/airport_pa_auto_trips_" + veh_type + "_" + period + ".mtx"
-            od_mtx_file = trips_dir + "/airport_auto_trips_" + veh_type + "_" + period + ".mtx"
-            CopyFile(pa_mtx_file, od_mtx_file)
-            
-            od_transpose_mtx_file = Substitute(od_mtx_file, ".mtx", "_transpose.mtx", )
-            mat = OpenMatrix(od_mtx_file, )
-            
-            tmat = TransposeMatrix(mat, {
-                {"File Name", od_transpose_mtx_file},
-                {"Label", "Transposed Trips"},
-                {"Type", "Double"}}
-            )
-            mat = null
-            tmat = null
-            
-            mtx = CreateObject("Matrix")
-            mtx.LoadMatrix(od_mtx_file)  
-            mtx_core_names = mtx.GetCoreNames()
-            cores = mtx.GetCores()
-            
-            t_mtx = CreateObject("Matrix")
-            t_mtx.LoadMatrix(od_transpose_mtx_file)
-            t_cores = t_mtx.GetCores()
-            
-            pa_factor = dir_factors.(period)
-            
-            for core_name in mtx_core_names do    
-                cores.(core_name) := Nz(cores.(core_name)) * pa_factor + Nz(t_cores.(core_name)) * (1 - pa_factor)
-            end
-            
-            cores = null
-            t_cores = null
-            mtx = null
-            t_mtx = null
-            
-            DeleteFile(od_transpose_mtx_file)
-            DeleteFile(pa_mtx_file)
-        end
-    end
-
-    //Combine cav and hv OD matrices and add return trip
-    for period in periods do
-        cav_od_mtx_file = trips_dir + "/airport_auto_trips_cav" + "_" + period + ".mtx"
-        hv_od_mtx_file = trips_dir + "/airport_auto_trips_hv" + "_" + period + ".mtx"
+        pa_mtx_file = trips_dir + "/airport_pa_auto_trips_" + period + ".mtx"
         od_mtx_file = trips_dir + "/airport_auto_trips_" + period + ".mtx"
+        CopyFile(pa_mtx_file, od_mtx_file)
         
-        //Transpose cav OD to account for return trip
-        //Assume CAV airport trip will return home to park instead of airport parking
-        t_cav_od_mtx_file = Substitute(cav_od_mtx_file, ".mtx", "_transpose.mtx", )
-        mat = OpenMatrix(cav_od_mtx_file, )
+        od_transpose_mtx_file = Substitute(od_mtx_file, ".mtx", "_transpose.mtx", )
+        mat = OpenMatrix(od_mtx_file, )
+        
         tmat = TransposeMatrix(mat, {
-                {"File Name", t_cav_od_mtx_file},
-                {"Label", "Transposed Trips"},
-                {"Type", "Double"}}
-            )
+            {"File Name", od_transpose_mtx_file},
+            {"Label", "Transposed Trips"},
+            {"Type", "Double"}}
+        )
         mat = null
         tmat = null
-
-        //Add everything together
-        cav_mtx = CreateObject("Matrix")
-        cav_mtx.LoadMatrix(cav_od_mtx_file)  
-        cav_mtx_core_names = cav_mtx.GetCoreNames()
-        cav_cores = cav_mtx.GetCores()
-            
-        t_cav_mtx = CreateObject("Matrix")
-        t_cav_mtx.LoadMatrix(t_cav_od_mtx_file)
-        t_cav_cores = t_cav_mtx.GetCores()
-
-        CopyFile(hv_od_mtx_file, od_mtx_file)
-        od_mtx = CreateObject("Matrix")
-        od_mtx.LoadMatrix(od_mtx_file)
-        od_cores = od_mtx.GetCores()
-    
-        for core_name in cav_mtx_core_names do    
-            od_cores.(core_name) := Nz(od_cores.(core_name)) + nz(cav_cores.(core_name)) + nz(t_cav_cores.(core_name))
+        
+        mtx = CreateObject("Matrix")
+        mtx.LoadMatrix(od_mtx_file)  
+        mtx_core_names = mtx.GetCoreNames()
+        cores = mtx.GetCores()
+        
+        t_mtx = CreateObject("Matrix")
+        t_mtx.LoadMatrix(od_transpose_mtx_file)
+        t_cores = t_mtx.GetCores()
+        
+        pa_factor = dir_factors.(period)
+          
+        for core_name in mtx_core_names do    
+            cores.(core_name) := Nz(cores.(core_name)) * pa_factor + Nz(t_cores.(core_name)) * (1 - pa_factor)
         end
-
-        cav_mtx = null
-        cav_cores = null
-        t_cav_mtx = null
-        t_cav_cores = null
-        od_mtx = null
-        od_cores = null
-        DeleteFile(cav_od_mtx_file)
-        DeleteFile(t_cav_od_mtx_file)
-        DeleteFile(hv_od_mtx_file)
-
-    end
-    
-
+        
+        cores = null
+        t_cores = null
+        mtx = null
+        t_mtx = null
+        
+        DeleteFile(od_transpose_mtx_file)
+        DeleteFile(pa_mtx_file)
+    end  
 endmacro
