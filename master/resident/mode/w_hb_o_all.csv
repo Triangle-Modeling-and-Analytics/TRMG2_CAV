@@ -7,10 +7,10 @@ auto_pay,Constant,cavvs,0.62,Additional Calibration Constant
 auto_pay,Constant,,-1.032,Constant
 auto_pay,hov_skim.CongTime,,-0.0425,Travel time
 auto_pay,se.PKTNCWait.O,,-0.0425,Auto wait time
-auto_pay,hov_skim.auto_pay_fare,hvvi,-0.155507,Auto fare
-auto_pay,hov_skim.auto_pay_fare,hvvs,-0.155507,Auto fare
-auto_pay,hov_skim.auto_pay_fare*0.5,cavvi,-0.155507,Auto fare
-auto_pay,hov_skim.auto_pay_fare*0.5,cavvs,-0.155507,Auto fare
+auto_pay,hov_skim.auto_pay_fare*0.6,hvvi,-0.155507,Auto fare
+auto_pay,hov_skim.auto_pay_fare*0.6,hvvs,-0.155507,Auto fare
+auto_pay,hov_skim.auto_pay_fare*0.6,cavvi,-0.155507,Auto fare
+auto_pay,hov_skim.auto_pay_fare*0.6,cavvs,-0.155507,Auto fare
 hov2,Constant,v0,-99,Auto Availability
 hov2,Constant,hvvi,0.714367,Additional Calibration Constant
 hov2,Constant,hvvs,-0.92358,Additional Calibration Constant

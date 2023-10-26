@@ -16,14 +16,14 @@ auto_pay,Constant,cavihvs,3.18576,Additional Calibration Constant
 auto_pay,Constant,cavilvi,1.575,Vehicle insufficient households
 auto_pay,Constant,cavilvi,2.424086,Additional Calibration Constant
 auto_pay,Constant,cavilvs,-0.312514,Additional Calibration Constant
-auto_pay,hov_skim.auto_pay_fare,hvihvi,-0.175156,Auto fare
-auto_pay,hov_skim.auto_pay_fare,hvihvs,-0.175156,Auto fare
-auto_pay,hov_skim.auto_pay_fare,hvilvi,-0.175156,Auto fare
-auto_pay,hov_skim.auto_pay_fare,hvilvs,-0.175156,Auto fare
-auto_pay,hov_skim.auto_pay_fare*0.5,cavihvi,-0.175156,Auto fare
-auto_pay,hov_skim.auto_pay_fare*0.5,cavihvs,-0.175156,Auto fare
-auto_pay,hov_skim.auto_pay_fare*0.5,cavilvi,-0.175156,Auto fare
-auto_pay,hov_skim.auto_pay_fare*0.5,cavilvs,-0.175156,Auto fare
+auto_pay,hov_skim.auto_pay_fare*0.6,hvihvi,-0.175156,Auto fare
+auto_pay,hov_skim.auto_pay_fare*0.6,hvihvs,-0.175156,Auto fare
+auto_pay,hov_skim.auto_pay_fare*0.6,hvilvi,-0.175156,Auto fare
+auto_pay,hov_skim.auto_pay_fare*0.6,hvilvs,-0.175156,Auto fare
+auto_pay,hov_skim.auto_pay_fare*0.6,cavihvi,-0.175156,Auto fare
+auto_pay,hov_skim.auto_pay_fare*0.6,cavihvs,-0.175156,Auto fare
+auto_pay,hov_skim.auto_pay_fare*0.6,cavilvi,-0.175156,Auto fare
+auto_pay,hov_skim.auto_pay_fare*0.6,cavilvs,-0.175156,Auto fare
 hov2,Constant,hvihvi,-0.7876,Vehicle insufficient households
 hov2,Constant,hvihvi,0.6589,High income households
 hov2,Constant,hvihvi,2.509505,Additional Calibration Constant
