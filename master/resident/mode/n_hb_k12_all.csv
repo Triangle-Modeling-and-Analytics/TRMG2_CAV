@@ -42,8 +42,8 @@ sov,Constant,cavvs,-0.191632,Additional Calibration Constant
 sov,Constant,,-0.1064,Constant
 sov,sov_skim.CongTime,hvvi,-0.1478,Travel time
 sov,sov_skim.CongTime,hvvs,-0.1478,Travel time
-sov,sov_skim.CongTime*0.7,cavvi,-0.1478,Travel time
-sov,sov_skim.CongTime*0.7,cavvs,-0.1478,Travel time
+sov,sov_skim.CongTime*0.4,cavvi,-0.1478,Travel time
+sov,sov_skim.CongTime*0.4,cavvs,-0.1478,Travel time
 w_lb,Constant,v0,0.58,Zero-vehicle households
 w_lb,se.HiIncomePct.O,,-2.443,High income household percentage
 w_lb,w_lb_skim.[In-Vehicle Time],,-0.02129,IVTT
