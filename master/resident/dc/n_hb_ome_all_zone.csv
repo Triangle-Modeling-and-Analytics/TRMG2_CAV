@@ -2,14 +2,10 @@ Expression,Segment,Coefficient,Description
 se.n_hbome_size.D,,0.881,Size term
 nz(mc_logsums.NonHHAutoComposite),,0.416,
 sov_skim.CongTime,,-0.208,
-sov_skim.CongTime,hvihvi,-0.208,
-sov_skim.CongTime,hvihvs,-0.208,
-sov_skim.CongTime,hvilvi,-0.208,
-sov_skim.CongTime,hvilvs,-0.208,
-sov_skim.CongTime*0.75,cavihvi,-0.208,
-sov_skim.CongTime*0.75,cavihvs,-0.208,
-sov_skim.CongTime*0.75,cavilvi,-0.208,
-sov_skim.CongTime*0.75,cavilvs,-0.208,
+sov_skim.CongTime,hvvi,-0.208,
+sov_skim.CongTime,hvvs,-0.208,
+sov_skim.CongTime*0.75,cavvi,-0.208,
+sov_skim.CongTime*0.75,cavvs,-0.208,
 "max(0, sov_skim.CongTime - 30)",,0.136,
 intra_cluster.IZ,,0.225,Adjustment
 sov_skim.CongTime > 55,,-99,Cutoff
