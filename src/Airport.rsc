@@ -229,7 +229,7 @@ Macro "Airport Mode Choice" (Args)
             airport_cores = airport_mtx.GetCores()
             
             for mode in mode_names do
-                if veh_type = "cav" then adjustment = 0.7 else adjustment = 0.3
+                if veh_type = "cav" then adjustment = 0.7 else adjustment = 0.3 // assume MPR% will be cav trips
                 out_cores.(mode) := 0
                 out_cores.(mode) := nz(airport_cores.("Trips")) * mc_cores.(mode) * adjustment
             end
@@ -268,7 +268,7 @@ Macro "Airport Separate Auto and Transit" (Args)
             all_modes = mtx.GetCoreNames()	   
             
             transit_modes = ArrayExclude(all_modes, auto_modes)
-            if veh_type = "can" then do
+            if veh_type = "cav" then do //only create transit matrix once per period
                 matOpts = {{"File Name", transit_mtx_file}, {"Label", "Airport Transit Trips"}, {"File Based", "Yes"}, {"Tables", transit_modes}}
                 CopyMatrixStructure({mtx_cores[1][2]}, matOpts)
             end
