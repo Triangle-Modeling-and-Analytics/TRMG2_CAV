@@ -2,11 +2,11 @@ Alternative,Expression,Segment,Coefficient,Description
 auto_pay,Constant,v0,3.822,Zero-vehicle households
 auto_pay,Constant,v0,0.92578,Additional Calibration Constant
 auto_pay,Constant,hvvi,3.822,Vehicle insufficient households
-auto_pay,Constant,hvvi,3.540344,Additional Calibration Constant
-auto_pay,Constant,hvvs,4.019419,Additional Calibration Constant
+auto_pay,Constant,hvvi,3.54034,Additional Calibration Constant
+auto_pay,Constant,hvvs,4.01942,Additional Calibration Constant
 auto_pay,Constant,cavvi,3.822,Vehicle insufficient households
-auto_pay,Constant,cavvi,3.540344,Additional Calibration Constant
-auto_pay,Constant,cavvs,4.019419,Additional Calibration Constant
+auto_pay,Constant,cavvi,3.54034,Additional Calibration Constant
+auto_pay,Constant,cavvs,4.01942,Additional Calibration Constant
 auto_pay,Constant,,4.639,Constant
 auto_pay,hov_skim.CongTime,,-0.0261,Travel time
 auto_pay,se.PKTNCWait.O,,-0.0261,Auto wait time
@@ -15,9 +15,9 @@ auto_pay,hov_skim.auto_pay_fare*0.6,hvvs,-0.131619,Auto fare
 auto_pay,hov_skim.auto_pay_fare*0.6,cavvi,-0.131619,Auto fare
 auto_pay,hov_skim.auto_pay_fare*0.6,cavvs,-0.131619,Auto fare
 hov2,Constant,v0,-99,Auto Availability
-hov2,Constant,hvvi,6.338566,Additional Calibration Constant
+hov2,Constant,hvvi,6.33857,Additional Calibration Constant
 hov2,Constant,hvvs,5.87692,Additional Calibration Constant
-hov2,Constant,cavvi,6.338566,Additional Calibration Constant
+hov2,Constant,cavvi,6.33857,Additional Calibration Constant
 hov2,Constant,cavvs,5.87692,Additional Calibration Constant
 hov2,Constant,,-0.5574,Constant
 hov2,parking.MC_LS_NonWork.D,,0.8998,Parking
@@ -29,10 +29,10 @@ hov2,hov_skim.CongTime*0.4,cavvs,-0.03586,Travel time
 hov2,hov_skim.[TollCostHOV (Skim)],,-0.180837,Toll cost
 hov2,se.HHSize1Pct.O,,-0.2811,Percent of 1-person HHs
 hov3,Constant,v0,-99,Auto Availability
-hov3,Constant,hvvi,6.342952,Additional Calibration Constant
-hov3,Constant,hvvs,5.867509,Additional Calibration Constant
-hov3,Constant,cavvi,6.342952,Additional Calibration Constant
-hov3,Constant,cavvs,5.867509,Additional Calibration Constant
+hov3,Constant,hvvi,6.34295,Additional Calibration Constant
+hov3,Constant,hvvs,5.86751,Additional Calibration Constant
+hov3,Constant,cavvi,6.34295,Additional Calibration Constant
+hov3,Constant,cavvs,5.86751,Additional Calibration Constant
 hov3,Constant,,-0.6465,Constant
 hov3,parking.MC_LS_NonWork.D,,0.8998,Parking
 hov3,se.HiIncomePct.O,,0.3153,High income
@@ -45,19 +45,22 @@ hov3,se.HHSize1Pct.O,,-0.2811,Percent of 1-person HHs
 other_auto,Constant,v0,2.366,Zero-vehicle households
 other_auto,Constant,v0,1.77795,Additional Calibration Constant
 other_auto,Constant,hvvi,2.366,Vehicle insufficient households
-other_auto,Constant,hvvi,3.505281,Additional Calibration Constant
-other_auto,Constant,hvvs,4.918794,Additional Calibration Constant
+other_auto,Constant,hvvi,3.50528,Additional Calibration Constant
+other_auto,Constant,hvvs,4.91879,Additional Calibration Constant
 other_auto,Constant,cavvi,2.366,Vehicle insufficient households
-other_auto,Constant,cavvi,3.505281,Additional Calibration Constant
-other_auto,Constant,cavvs,4.918794,Additional Calibration Constant
-other_auto,sov_skim.CongTime,,-0.02645,Travel time
+other_auto,Constant,cavvi,3.50528,Additional Calibration Constant
+other_auto,Constant,cavvs,4.91879,Additional Calibration Constant
+other_auto,sov_skim.CongTime,hvvi,-0.02645,Travel time
+other_auto,sov_skim.CongTime,hvvs,-0.02645,Travel time
+other_auto,sov_skim.CongTime*0.4,cavvi,-0.02645,Travel time
+other_auto,sov_skim.CongTime*0.4,cavvs,-0.02645,Travel time
 other_auto,sov_skim.[TollCostSOV (Skim)],,-0.133384,Toll cost
 other_auto,parking.MC_LS_NonWork.D,,0.4954,Parking
 sov,Constant,v0,-99,Auto Availability
-sov,Constant,hvvi,6.200475,Additional Calibration Constant
-sov,Constant,hvvs,5.840696,Additional Calibration Constant
-sov,Constant,cavvi,6.200475,Additional Calibration Constant
-sov,Constant,cavvs,5.840696,Additional Calibration Constant
+sov,Constant,hvvi,6.20047,Additional Calibration Constant
+sov,Constant,hvvs,5.8407,Additional Calibration Constant
+sov,Constant,cavvi,6.20047,Additional Calibration Constant
+sov,Constant,cavvs,5.8407,Additional Calibration Constant
 sov,Constant,,-0.5766,Constant
 sov,parking.MC_LS_NonWork.D,,0.8998,Parking
 sov,se.HiIncomePct.O,,0.384,High income
@@ -66,6 +69,26 @@ sov,sov_skim.CongTime,hvvs,-0.03586,Travel time
 sov,sov_skim.CongTime*0.4,cavvi,-0.03586,Travel time
 sov,sov_skim.CongTime*0.4,cavvs,-0.03586,Travel time
 sov,sov_skim.[TollCostSOV (Skim)],,-0.180837,Toll cost
+w_lb,Constant,v0,3.789,Zero-vehicle households
+w_lb,Constant,hvvi,3.789,Vehicle insufficient households
+w_lb,Constant,cavvi,3.789,Vehicle insufficient households
+w_lb,Constant,,9.577,Constant
+w_lb,w_lb_skim.[In-Vehicle Time],,-0.046,IVTT and Fare (converted by VOT)
+w_lb,w_lb_skim.Fare,,-0.232,Fare
+w_lb,w_lb_skim.[Access Walk Time],,-0.1461,Access walk time
+w_lb,w_lb_skim.[Initial Wait Time],,-0.123,Initial wait time
+w_lb,w_lb_skim.[Egress Walk Time],,-0.1972,Egress walk time
+w_lb,w_lb_skim.[Number of Transfers] > 1,,-1.4619,High transfers
+w_eb,Constant,v0,3.789,Zero-vehicle households
+w_eb,Constant,hvvi,3.789,Vehicle insufficient households
+w_eb,Constant,cavvi,3.789,Vehicle insufficient households
+w_eb,Constant,,8.507,Constant
+w_eb,w_eb_skim.[In-Vehicle Time],,-0.046,IVTT and Fare (converted by VOT)
+w_eb,w_eb_skim.Fare,,-0.232,Fare
+w_eb,w_eb_skim.[Access Walk Time],,-0.1461,Access walk time
+w_eb,w_eb_skim.[Initial Wait Time],,-0.123,Initial wait time
+w_eb,w_eb_skim.[Egress Walk Time],,-0.1972,Egress walk time
+w_eb,w_eb_skim.[Number of Transfers] > 1,,-1.4619,High transfers
 w_brt,Constant,v0,3.789,Zero-vehicle households
 w_brt,Constant,hvvi,3.789,Vehicle insufficient households
 w_brt,Constant,hvvi,0.173,Path type constant = -.25 (visibility) * 15 (mins) * IVTTcoef
@@ -80,37 +103,3 @@ w_brt,w_brt_skim.[Access Walk Time],,-0.1461,Access walk time
 w_brt,w_brt_skim.[Initial Wait Time],,-0.123,Initial wait time
 w_brt,w_brt_skim.[Egress Walk Time],,-0.1972,Egress walk time
 w_brt,w_brt_skim.[Number of Transfers] > 2,,-1.4619,High transfers
-w_eb,Constant,v0,3.789,Zero-vehicle households
-w_eb,Constant,hvvi,3.789,Vehicle insufficient households
-w_eb,Constant,cavvi,3.789,Vehicle insufficient households
-w_eb,Constant,,8.507,Constant
-w_eb,w_eb_skim.[In-Vehicle Time],,-0.046,IVTT and Fare (converted by VOT)
-w_eb,w_eb_skim.Fare,,-0.232,Fare
-w_eb,w_eb_skim.[Access Walk Time],,-0.1461,Access walk time
-w_eb,w_eb_skim.[Initial Wait Time],,-0.123,Initial wait time
-w_eb,w_eb_skim.[Egress Walk Time],,-0.1972,Egress walk time
-w_eb,w_eb_skim.[Number of Transfers] > 1,,-1.4619,High transfers
-w_lb,Constant,v0,3.789,Zero-vehicle households
-w_lb,Constant,hvvi,3.789,Vehicle insufficient households
-w_lb,Constant,cavvi,3.789,Vehicle insufficient households
-w_lb,Constant,,9.577,Constant
-w_lb,w_lb_skim.[In-Vehicle Time],,-0.046,IVTT and Fare (converted by VOT)
-w_lb,w_lb_skim.Fare,,-0.232,Fare
-w_lb,w_lb_skim.[Access Walk Time],,-0.1461,Access walk time
-w_lb,w_lb_skim.[Initial Wait Time],,-0.123,Initial wait time
-w_lb,w_lb_skim.[Egress Walk Time],,-0.1972,Egress walk time
-w_lb,w_lb_skim.[Number of Transfers] > 1,,-1.4619,High transfers
-w_lr,Constant,v0,3.789,Zero-vehicle households
-w_lr,Constant,hvvi,3.789,Vehicle insufficient households
-w_lr,Constant,hvvi,0.345,Path type constant = -.5 (visibility) * 15 (mins) * IVTTcoef
-w_lr,Constant,hvvs,0.518,Path type constant = -.5 (visibility) * 22.5 (mins) * IVTTcoef
-w_lr,Constant,cavvi,3.789,Vehicle insufficient households
-w_lr,Constant,cavvi,0.345,Path type constant = -.5 (visibility) * 15 (mins) * IVTTcoef
-w_lr,Constant,cavvs,0.518,Path type constant = -.5 (visibility) * 22.5 (mins) * IVTTcoef
-w_lr,Constant,,9.577,Constant
-w_lr,w_lr_skim.[In-Vehicle Time] * .9,,-0.046,IVTT (discounted)
-w_lr,w_lr_skim.Fare,,-0.232,Fare
-w_lr,w_lr_skim.[Access Walk Time],,-0.1461,Access walk time
-w_lr,w_lr_skim.[Initial Wait Time],,-0.123,Initial wait time
-w_lr,w_lr_skim.[Egress Walk Time],,-0.1972,Egress walk time
-w_lr,w_lr_skim.[Number of Transfers] > 2,,-1.4619,High transfers
