@@ -204,6 +204,8 @@ Macro "Airport Mode Choice" (Args)
     mc_dir = Args.[Output Folder] + "\\resident\\mode"
     periods = RunMacro("Get Unconverged Periods", Args)
     veh_types = {"cav", "hv"}
+    mpr = Args.CAV
+    if mpr = "MH" then cav_factor = 0.7 else if mpr = "H" then cav_factor = 0.95
 
     for period in periods do 
         for veh_type in veh_types do
@@ -229,7 +231,7 @@ Macro "Airport Mode Choice" (Args)
             airport_cores = airport_mtx.GetCores()
             
             for mode in mode_names do
-                if veh_type = "cav" then adjustment = 0.7 else adjustment = 0.3 // assume MPR% will be cav trips
+                if veh_type = "cav" then adjustment = cav_factor else adjustment = 0.3 // assume MPR% will be cav trips
                 out_cores.(mode) := 0
                 out_cores.(mode) := nz(airport_cores.("Trips")) * mc_cores.(mode) * adjustment
             end
