@@ -264,6 +264,8 @@ Macro "CAV Generation Adjustment" (Args)
     output = null
     for i = 1 to trip_types.length do
         trip_type = trip_types[i]
+        if Position(trip_type, "OD") or Position(trip_type, "OME") then factor = 1.12 else factor = 1.042
+        if Position(trip_type, "OMED") then factor = 1.042
 
         v = GetDataVector(per_vw + "|sel", trip_type, )
         output.(trip_type) = v * factor
