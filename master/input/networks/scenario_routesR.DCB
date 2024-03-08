@@ -1,0 +1,14 @@
+
+117
+"Route_ID",I,1,4,0,4,0,,"","",,"Sum",
+"Route_Name",C,5,33,0,33,0,,"","",,"Copy",
+"Master_Route_ID",I,38,4,0,4,0,,"","Route ID from the master route system",,"Sum",
+"Agency",C,42,28,0,28,0,,"","",,"Copy",
+"Length",R,70,8,0,8,4,,"","",,"Sum",
+"ProjID",C,78,12,0,12,0,,"","",,"Copy",
+"Mode",I,90,4,0,12,0,,"","",,"Sum",
+"Fare",R,94,8,0,12,2,,"","",,"Sum",
+"AMHeadway",I,102,4,0,12,0,,"","",,"Sum",
+"MDHeadway",I,106,4,0,12,0,,"","",,"Sum",
+"PMHeadway",I,110,4,0,12,0,,"","",,"Sum",
+"NTHeadway",I,114,4,0,12,0,,"","",,"Sum",
