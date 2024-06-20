@@ -9,6 +9,7 @@ Macro "Create Assignment Matrices" (Args)
 
     RunMacro("Add SAV Trips", Args)
     RunMacro("HB Collapse Auto Modes", Args)
+    RunMacro("HB Remove CAV Parkhome Trip", Args)
     RunMacro("HB Apply Parking Probabilities", Args)
     RunMacro("NHB Collapse Auto Modes", Args)
     RunMacro("NHB Apply Parking Probabilities", Args)
@@ -54,6 +55,112 @@ Macro "Add SAV Trips" (Args)
     out_file = Args.[Output Folder] + "/_summaries/trip_conservation/3 after Add SAV.csv"
     RunMacro("Trip Conservation Snapshot", trip_dir, out_file)
 endmacro
+
+/*
+This macro generates the probability that a CAV trip will return home to avoid parking
+based on trip distance and area type. Since parking model is only applied in parking restricted
+zones (CBD and univ), only distance is used here.
+*/
+
+Macro "Calculate CAV ParkHome Probability" (MacroOpts)
+    
+    sov_skim = MacroOpts.sov_skim
+    park_dir = MacroOpts.park_dir
+    parkAvailMtx = park_dir + "/ParkAvailability.mtx"
+
+    // Create a matrix to store CAV ParkHome Probability
+    out_file = park_dir + "/CAV_ParkHome_Probablity.mtx"
+    CopyFile(sov_skim, out_file)
+    parkhome_mtx = CreateObject("Matrix", out_file)
+    mh = parkhome_mtx.GetMatrixHandle()
+    RenameMatrix(mh, "CAV ParkHome Probability")
+    mh = null
+    core_names = parkhome_mtx.GetCoreNames()
+    parkhome_mtx.AddCores({"ParkHome_prob"})
+    parkhome_cores = parkhome_mtx.GetCores()
+    parkhome_cores.("ParkHome_prob") := if parkhome_cores.("Length (Skim)") > 20 then 0 else if parkhome_cores.("Length (Skim)") > 15 then 0.1 else if parkhome_cores.("Length (Skim)") > 10 then 0.2 else if parkhome_cores.("Length (Skim)") > 5 then 0.35 else 0.5    
+    parkhome_mtx.DropCores(core_names)
+
+    // Set parkhome to 0 if the zone is not parking restricted
+    parkavail_mtx = CreateObject("Matrix", parkAvailMtx)
+    parkavail_core = parkavail_mtx.GetCore("Availability")
+    parkhome_cores.("ParkHome_prob") := if parkavail_core >0 then parkhome_cores.("ParkHome_prob") else 0
+
+    parkhome_cores=null
+    parkavail_core = null
+
+endmacro
+
+/*
+Remove park home trips so they don't go into parking model
+*/
+
+Macro "HB Remove CAV Parkhome Trip" (Args)
+    out_dir = Args.[Output Folder]
+    park_dir = out_dir + "/resident/parking"
+    skims_dir = out_dir + "/skims"
+    sov_skim = skims_dir + "/roadway/avg_skim_AM_W_HB_sov.mtx"
+    periods = RunMacro("Get Unconverged Periods", Args)
+    trip_types = RunMacro("Get HB Trip Types", Args)
+    // the auto cores to apply parking to
+    auto_cores = {
+        "sov",
+        "hov2",
+        "hov3"
+    }
+
+    // Calculate CAV parkHome probability
+    opts = null
+    opts.sov_skim = sov_skim
+    opts.park_dir = park_dir
+    RunMacro("Calculate CAV ParkHome Probability", opts)
+
+    // Divert portion of parking trips to parkhome mode for CAV based on distance (stored in the p)
+    // Get CAV parkhome probablilty and apply to trip matrix
+    parkhome_prob_file = park_dir + "/CAV_ParkHome_Probablity.mtx"
+    park_mtx = CreateObject("Matrix", parkhome_prob_file)
+    parkhome_core = park_mtx.GetCore("ParkHome_prob")
+
+    for period in periods do
+        for trip_type in trip_types do
+            for auto_core in auto_cores do
+
+                trip_dir = out_dir + "/resident/trip_matrices"
+                trip_mtx_file = trip_dir + "/pa_per_trips_" + trip_type + "_" + period + ".mtx"
+                trip_mtx = CreateObject("Matrix", trip_mtx_file)
+                
+                cores = trip_mtx.GetCores()
+                if cores.position(auto_core) = 0 then continue
+                
+                tohome_core_name = auto_core + "_parkhome_tohome"
+                fromhome_core_name = auto_core + "_parkhome_fromhome"
+                trip_mtx.AddCores({tohome_core_name, fromhome_core_name})
+                
+                cores.(fromhome_core_name) := cores.(auto_core) * parkhome_core //multiply trips by park home probability to trips that will use parkhome mode
+
+                // Remove parkhome trips from auto cores
+                cores.(auto_core) := cores.(auto_core) - cores.(fromhome_core_name)
+
+                // Transpose park home OD to create return home trip
+                {drive, path, name, ext} = SplitPath(trip_mtx_file)    
+                trans_mtx_file = drive + path + name + "_transposed.mtx"
+                trip_mtx.Transpose({
+                    OutputFile: trans_mtx_file,
+                    Cores: {fromhome_core_name}
+                })
+                trans_mtx = CreateObject("Matrix", trans_mtx_file)
+                trans_core = trans_mtx.GetCore(fromhome_core_name)
+                cores.(tohome_core_name) := trans_core
+                trans_mtx = null
+                trans_core = null
+                DeleteFile(trans_mtx_file)
+
+                
+            end
+        end
+    end
+endmacro
+
 
 /*
 Convert from PA to OD format for auto modes
