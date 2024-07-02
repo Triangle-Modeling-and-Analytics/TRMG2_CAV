@@ -78,7 +78,7 @@ Macro "Calculate CAV ParkHome Probability" (MacroOpts)
     core_names = parkhome_mtx.GetCoreNames()
     parkhome_mtx.AddCores({"ParkHome_prob"})
     parkhome_cores = parkhome_mtx.GetCores()
-    parkhome_cores.("ParkHome_prob") := if parkhome_cores.("Length (Skim)") > 20 then 0 else if parkhome_cores.("Length (Skim)") > 15 then 0.1 else if parkhome_cores.("Length (Skim)") > 10 then 0.2 else if parkhome_cores.("Length (Skim)") > 5 then 0.35 else 0.5    
+    parkhome_cores.("ParkHome_prob") := if parkhome_cores.("Length (Skim)") > 20 then 0 else if parkhome_cores.("Length (Skim)") > 15 then 0.05 else if parkhome_cores.("Length (Skim)") > 10 then 0.1 else if parkhome_cores.("Length (Skim)") > 5 then 0.175 else 0.25    
     parkhome_mtx.DropCores(core_names)
 
     // Set parkhome to 0 if the zone is not parking restricted
@@ -131,7 +131,7 @@ Macro "HB Remove CAV Parkhome Trip" (Args)
                 
                 cores = trip_mtx.GetCores()
                 if cores.position(auto_core) = 0 then continue
-                
+
                 tohome_core_name = auto_core + "_parkhome_tohome"
                 fromhome_core_name = auto_core + "_parkhome_fromhome"
                 trip_mtx.AddCores({tohome_core_name, fromhome_core_name})
